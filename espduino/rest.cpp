@@ -127,7 +127,8 @@ uint16_t REST::getResponse(char* data, uint16_t maxLen)
   if(response){
     RESPONSE resp(res);
 
-    resp.popArgs((uint8_t*)data, maxLen);
+    uint32_t len = resp.popArgs((uint8_t*)data, maxLen);
+    data[len < maxLen ? len : maxLen-1] = 0;
     return esp->return_value;
   }
     
