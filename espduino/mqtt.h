@@ -23,7 +23,7 @@ public:
   FP<void, void*> publishedCb;
   FP<void, void*> dataCb;
 
-  
+
   MQTT(ESP *esp);
   boolean begin(const char* client_id, const char* user, const char* pass, uint16_t keep_alive, boolean clean_seasion);
   boolean lwt(const char* topic, const char* message, uint8_t qos, uint8_t retain);
