@@ -79,14 +79,14 @@ void ESP::protoCompletedCb(void) {
   uint8_t* data_ptr;
   argc = packet->argc;
   data_ptr = (uint8_t*)&packet->args;
-  crc = crc16_data((uint8_t*)&packet->cmd, 12, crc);
+  crc = crc16_data((unsigned const char*)&packet->cmd, 12, crc);
 
   //  ardprintf(_debug, "ARD CMD: %d, cb: %d, ret: %d, argc: %d", packet->cmd, packet->callback, packet->_return, packet->argc);
 
   while (argc--) {
     len = *((uint16_t*)data_ptr);
     //    ardprintf(_debug, "Arg[%d], len: %d:", argn++, len);
-    crc = crc16_data(data_ptr, 2, crc);
+    crc = crc16_data((unsigned const char*)data_ptr, 2, crc);
     data_ptr += 2;
     while (len--) {
       crc = crc16_add(*data_ptr, crc);
@@ -161,16 +161,16 @@ uint16_t ESP::request(uint16_t cmd, uint32_t callback, uint32_t _return, uint16_
   uint16_t crc = 0;
   _serial->write(0x7E);
   write((uint8_t*)&cmd, 2);
-  crc = crc16_data((uint8_t*)&cmd, 2, crc);
+  crc = crc16_data((unsigned const char*)&cmd, 2, crc);
 
   write((uint8_t*)&callback, 4);
-  crc = crc16_data((uint8_t*)&callback, 4, crc);
+  crc = crc16_data((unsigned const char*)&callback, 4, crc);
 
   write((uint8_t*)&_return, 4);
-  crc = crc16_data((uint8_t*)&_return, 4, crc);
+  crc = crc16_data((unsigned const char*)&_return, 4, crc);
 
   write((uint8_t*)&argc, 2);
-  crc = crc16_data((uint8_t*)&argc, 2, crc);
+  crc = crc16_data((unsigned const char*)&argc, 2, crc);
   return crc;
 }
 
@@ -180,7 +180,7 @@ uint16_t ESP::request(uint16_t crc_in, uint8_t* data, uint16_t len) {
   while (pad_len % 4 != 0)
     pad_len++;
   write((uint8_t*)&pad_len, 2);
-  crc_in = crc16_data((uint8_t*)&pad_len, 2, crc_in);
+  crc_in = crc16_data((unsigned const char*)&pad_len, 2, crc_in);
 
   while (len--) {
     write(*data);
@@ -202,7 +202,7 @@ uint16_t ESP::request(uint16_t crc_in, const __FlashStringHelper* data, uint16_t
   while (pad_len % 4 != 0)
     pad_len++;
   write((uint8_t*)&pad_len, 2);
-  crc_in = crc16_data((uint8_t*)&pad_len, 2, crc_in);
+  crc_in = crc16_data((unsigned const char*)&pad_len, 2, crc_in);
 
   PGM_P p = reinterpret_cast<PGM_P>(data);
   while (len--) {
