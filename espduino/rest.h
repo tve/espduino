@@ -1,9 +1,9 @@
 /**
- * \file
- *       ESP8266 RESTful Bridge
- * \author
- *       Tuan PM <tuanpm@live.com>
- */
+* \file
+*       ESP8266 RESTful Bridge
+* \author
+*       Tuan PM <tuanpm@live.com>
+*/
 #ifndef _REST_H_
 #define _REST_H_
 
@@ -34,7 +34,7 @@ private:
   void *res;
 
 public:
-  
+
   REST(ESP *e);
   boolean begin(const char* host, uint16_t port, boolean security);
   boolean begin(const char* host);
@@ -49,7 +49,7 @@ public:
   void setTimeout(uint32_t ms);
   uint16_t getResponse(char* data, uint16_t maxLen);
   void setUserAgent(const char* value);
- // Set Content-Type Header
+  // Set Content-Type Header
   void setContentType(const char* value);
   void setHeader(const char* value);
 
